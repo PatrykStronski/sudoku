@@ -15,6 +15,7 @@ impl Sudoku {
                 return_str.push_str("\n");
             }
             return_str.push_str(&digit.to_string());
+            return_str.push_str(" ");
             cnt += 1;
         }
         return return_str;
@@ -28,6 +29,108 @@ impl Sudoku {
         return self.print_board(self.current_board.to_vec());
     }
 
-    pub fn check_with_solution(&self) {
+    pub fn get_errors_with_solution(&self) -> u8 {
+        let mut errors = 0;
+        for i in 0..80 {
+            if self.current_board[i] != self.solution[i] {
+                errors += 1;
+            }
+        }
+        return errors;
+    }
+
+    fn calculate_square_indices(&self, pos_x: usize, pos_y: usize) -> Vec<usize> {
+        let x_square: usize = pos_x/3;
+        let y_square: usize = pos_y/3;
+        let mut indices = Vec::<usize>::new();
+        let mut start_row = y_square*3*9 + x_square*3;
+        for i in start_row..(start_row+3) {
+            indices.push(i);
+        }
+        start_row += 9;
+        for i in start_row..(start_row+3) {
+            indices.push(i);
+        }
+        start_row += 9;
+        for i in start_row..(start_row+3) {
+            indices.push(i);
+        }
+        return indices;
+    }
+
+    fn check_row(&self, row: usize) -> Vec<i16> {
+        let start: usize = row * 9;
+        let mut numbers = vec![0,1,2,3,4,5,6,7,8,9];
+        for i in start..(start+9) {
+            if self.current_board[i] != -1 {
+                numbers.retain(|&x| x != self.current_board[i]);
+            }
+        }
+        return numbers;
+    }
+
+    fn check_column(&self, mut col: usize) -> Vec<i16> {
+        let mut numbers = vec![0,1,2,3,4,5,6,7,8,9];
+        while col < 81 {
+            if self.current_board[col as usize] != -1 {
+                numbers.retain(|&x| x != self.current_board[col]);
+            }
+            col += 9;
+        }
+        return numbers;
+    }
+
+    fn check_square(&self, pos_x: usize, pos_y: usize) -> Vec<i16> {
+        let mut numbers = vec![0,1,2,3,4,5,6,7,8,9];
+        let square_indices = self.calculate_square_indices(pos_x, pos_y);
+        for i in square_indices {
+            if self.current_board[i as usize] != -1 {
+                numbers.retain(|&x| x != self.current_board[i]);
+            }
+        }
+        return numbers;
+    }
+
+    fn choose_unique(&self, vec1: &Vec<i16>, vec2: &Vec<i16>, vec3: &Vec<i16>) -> i16 {
+        let mut comp1 = Vec::<i16>::new();
+        for i in vec1 {
+            for j in vec2 {
+                if i == j {
+                    comp1.push(*i)
+                }
+            }
+        }
+        if comp1.len() == 0 {
+            return -1;
+        }
+        let mut comp2 = Vec::<i16>::new();
+        for i in comp1 {
+            for j in vec3 {
+                if i == *j {
+                    comp2.push(i)
+                }
+            }
+        }
+        if comp2.len() != 1 {
+            return -1;
+        }
+        return comp2[0];
+    }
+
+    pub fn insert_field(&mut self, pos_x: usize, pos_y: usize, value: i16) {
+        let index = pos_y * 9 + pos_x;
+        self.current_board[index] = value;
+    }
+
+    pub fn fill_in_field(&mut self, pos_x: usize, pos_y: usize) -> bool {
+        let row_options = self.check_row(pos_y);
+        let column_options = self.check_column(pos_x);
+        let square_options = self.check_square(pos_x, pos_y);
+        let unique = self.choose_unique(&row_options, &column_options, &square_options);
+        if unique != -1 {
+            self.insert_field(pos_x, pos_y, unique);
+            return true;
+        }
+        return false;
     }
 }
