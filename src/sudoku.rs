@@ -117,9 +117,32 @@ impl Sudoku {
         return comp2[0];
     }
 
+    pub fn is_empty(&self, pos_x: usize, pos_y: usize) -> bool {
+        let index: usize = pos_y * 9 + pos_x;
+        if self.current_board[index] == -1 {
+            return true
+        }
+        return false;
+    }
+    
+    pub fn get_field(&self, pos_x: usize, pos_y: usize) -> i16 {
+        let index: usize = pos_y * 9 + pos_x;
+        return self.current_board[index];
+    }
+
     pub fn insert_field(&mut self, pos_x: usize, pos_y: usize, value: i16) {
         let index = pos_y * 9 + pos_x;
         self.current_board[index] = value;
+    }
+
+    pub fn get_quantity_empty_fields(&self) -> u8 {
+        let mut qty: u8 = 0;
+        for i in 0..81 {
+            if self.current_board[i] == -1 {
+                qty +=1;
+            }
+        }
+        return qty;
     }
 
     pub fn fill_in_field(&mut self, pos_x: usize, pos_y: usize) -> bool {
