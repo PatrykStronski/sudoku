@@ -58,9 +58,15 @@ impl Sudoku {
         return indices;
     }
 
+    fn calculate_nth_square_indices(&self, ind: usize -> Vec<usize> {
+        let x_square: usize = (ind % 3) * 3;
+        let y_square: usize = (ind / 3) * 3;
+        return self.calculate_square_indices(x_square, y_square);
+    }
+
     fn check_row(&self, row: usize) -> Vec<i16> {
         let start: usize = row * 9;
-        let mut numbers = vec![0,1,2,3,4,5,6,7,8,9];
+        let mut numbers = vec![1,2,3,4,5,6,7,8,9];
         for i in start..(start+9) {
             if self.current_board[i] != -1 {
                 numbers.retain(|&x| x != self.current_board[i]);
@@ -70,7 +76,7 @@ impl Sudoku {
     }
 
     fn check_column(&self, mut col: usize) -> Vec<i16> {
-        let mut numbers = vec![0,1,2,3,4,5,6,7,8,9];
+        let mut numbers = vec![1,2,3,4,5,6,7,8,9];
         while col < 81 {
             if self.current_board[col as usize] != -1 {
                 numbers.retain(|&x| x != self.current_board[col]);
@@ -81,7 +87,7 @@ impl Sudoku {
     }
 
     fn check_square(&self, pos_x: usize, pos_y: usize) -> Vec<i16> {
-        let mut numbers = vec![0,1,2,3,4,5,6,7,8,9];
+        let mut numbers = vec![1,2,3,4,5,6,7,8,9];
         let square_indices = self.calculate_square_indices(pos_x, pos_y);
         for i in square_indices {
             if self.current_board[i as usize] != -1 {
@@ -111,6 +117,7 @@ impl Sudoku {
                 }
             }
         }
+        println!("Unique {:?}", comp2);
         if comp2.len() != 1 {
             return -1;
         }
@@ -149,11 +156,83 @@ impl Sudoku {
         let row_options = self.check_row(pos_y);
         let column_options = self.check_column(pos_x);
         let square_options = self.check_square(pos_x, pos_y);
+        println!("{:?}",row_options);
+        println!("{:?}",column_options);
+        println!("{:?}",square_options);
         let unique = self.choose_unique(&row_options, &column_options, &square_options);
         if unique != -1 {
             self.insert_field(pos_x, pos_y, unique);
             return true;
         }
         return false;
+    }
+
+    fn find_in(&self, number: i16, numbers: &Vec<i16>) -> i16 {
+        for n in numbers {
+            if numbers[n] == number {
+                return n;
+            }
+        }
+        return -1;
+    }
+
+    fn validate_row(&self, ind: usize) -> bool {
+        let mut numbers = vec![1,2,3,4,5,6,7,8,9];
+        for i as usize in ind..(ind+9) {
+            if self.current_board[i] != -1 {
+                let nmb_index = self.find_in(self.current_board[i] ,&numbers);
+                if numb_index == -1 {
+                    return false;
+                } else {
+                    numbers.remove(numb_index as usize);
+                }
+            }
+        }
+    }
+
+    fn validate_column(&self, mut ind: usize) -> bool {
+        let mut numbers = vec![1,2,3,4,5,6,7,8,9];
+        while ind < 81 {
+            if self.current_board[i] != -1 {
+                let nmb_index = self.find_in(self.current_board[i] ,&numbers);
+                if numb_index == -1 {
+                    return false;
+                } else {
+                    numbers.remove(numb_index as usize);
+                }
+            }
+            ind += 9;
+        }
+        return true;
+    }
+
+    fn validate_square(&self, ind: usize) -> bool {
+        let mut numbers = vec![1,2,3,4,5,6,7,8,9];
+        let square_indices = self.calculate_nth_square_indices(ind);
+        for i as usize in ind..(ind+9) {
+            if self.current_board[i] != -1 {
+                let nmb_index = self.find_in(self.current_board[i] ,&numbers);
+                if numb_index == -1 {
+                    return false;
+                } else {
+                    numbers.remove(numb_index as usize);
+                }
+            }
+        }
+    }
+
+    pub fn validate_solution(&self) -> bool {
+        for x in 0..9 {
+            if !self.validate_column(x) {
+                return false;
+            }
+            if !self.validate_row(x) {
+                return false;
+            }
+            if !self.validate_square(x) {
+                return false;
+            }
+        }
+        return true;
     }
 }

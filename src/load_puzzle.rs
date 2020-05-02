@@ -54,7 +54,6 @@ fn read_file(input_file: String) -> Result<Vec<Record>, Box<dyn Error>> {
     let mut rdr = ReaderBuilder::new()
         .from_path(input_file)?;
     for row in rdr.deserialize() {
-        println!("{:?}", row);
         let row_record: Record = row?;
         recs.push(row_record);
     }
