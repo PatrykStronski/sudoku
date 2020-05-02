@@ -58,7 +58,7 @@ impl Sudoku {
         return indices;
     }
 
-    fn calculate_nth_square_indices(&self, ind: usize -> Vec<usize> {
+    fn calculate_nth_square_indices(&self, ind: usize) -> Vec<usize> {
         let x_square: usize = (ind % 3) * 3;
         let y_square: usize = (ind / 3) * 3;
         return self.calculate_square_indices(x_square, y_square);
@@ -169,8 +169,8 @@ impl Sudoku {
 
     fn find_in(&self, number: i16, numbers: &Vec<i16>) -> i16 {
         for n in numbers {
-            if numbers[n] == number {
-                return n;
+            if numbers[*n as usize] == number {
+                return *n;
             }
         }
         return -1;
@@ -178,27 +178,28 @@ impl Sudoku {
 
     fn validate_row(&self, ind: usize) -> bool {
         let mut numbers = vec![1,2,3,4,5,6,7,8,9];
-        for i as usize in ind..(ind+9) {
+        for i in ind..(ind+9) {
             if self.current_board[i] != -1 {
                 let nmb_index = self.find_in(self.current_board[i] ,&numbers);
-                if numb_index == -1 {
+                if nmb_index == -1 {
                     return false;
                 } else {
-                    numbers.remove(numb_index as usize);
+                    numbers.remove(nmb_index as usize);
                 }
             }
         }
+        return true;
     }
 
     fn validate_column(&self, mut ind: usize) -> bool {
         let mut numbers = vec![1,2,3,4,5,6,7,8,9];
         while ind < 81 {
-            if self.current_board[i] != -1 {
-                let nmb_index = self.find_in(self.current_board[i] ,&numbers);
-                if numb_index == -1 {
+            if self.current_board[ind] != -1 {
+                let nmb_index = self.find_in(self.current_board[ind] ,&numbers);
+                if nmb_index == -1 {
                     return false;
                 } else {
-                    numbers.remove(numb_index as usize);
+                    numbers.remove(nmb_index as usize);
                 }
             }
             ind += 9;
@@ -209,16 +210,17 @@ impl Sudoku {
     fn validate_square(&self, ind: usize) -> bool {
         let mut numbers = vec![1,2,3,4,5,6,7,8,9];
         let square_indices = self.calculate_nth_square_indices(ind);
-        for i as usize in ind..(ind+9) {
+        for i in ind..(ind+9) {
             if self.current_board[i] != -1 {
                 let nmb_index = self.find_in(self.current_board[i] ,&numbers);
-                if numb_index == -1 {
+                if nmb_index == -1 {
                     return false;
                 } else {
-                    numbers.remove(numb_index as usize);
+                    numbers.remove(nmb_index as usize);
                 }
             }
         }
+        return true;
     }
 
     pub fn validate_solution(&self) -> bool {
