@@ -97,6 +97,29 @@ impl Sudoku {
         return numbers;
     }
 
+    fn choose_unique_vec(&self, vec1: &Vec<i16>, vec2: &Vec<i16>, vec3: &Vec<i16>) -> Vec<i16> {
+        let mut comp1 = Vec::<i16>::new();
+        for i in vec1 {
+            for j in vec2 {
+                if i == j {
+                    comp1.push(*i)
+                }
+            }
+        }
+        if comp1.len() == 0 {
+            return comp1;
+        }
+        let mut comp2 = Vec::<i16>::new();
+        for i in comp1 {
+            for j in vec3 {
+                if i == *j {
+                    comp2.push(i)
+                }
+            }
+        }
+        return comp2;
+    }
+
     fn choose_unique(&self, vec1: &Vec<i16>, vec2: &Vec<i16>, vec3: &Vec<i16>) -> i16 {
         let mut comp1 = Vec::<i16>::new();
         for i in vec1 {
@@ -152,13 +175,17 @@ impl Sudoku {
         return qty;
     }
 
+    pub fn get_possible_solutions(&self, pos_x: usize, pos_y: usize) -> Vec<i16> {
+        let row_options = self.check_row(pos_y);
+        let column_options = self.check_column(pos_x);
+        let square_options = self.check_square(pos_x, pos_y);
+        return self.choose_unique_vec(&row_options, &column_options, &square_options);
+    }
+
     pub fn fill_in_field(&mut self, pos_x: usize, pos_y: usize) -> bool {
         let row_options = self.check_row(pos_y);
         let column_options = self.check_column(pos_x);
         let square_options = self.check_square(pos_x, pos_y);
-        println!("{:?}",row_options);
-        println!("{:?}",column_options);
-        println!("{:?}",square_options);
         let unique = self.choose_unique(&row_options, &column_options, &square_options);
         if unique != -1 {
             self.insert_field(pos_x, pos_y, unique);
@@ -210,7 +237,7 @@ impl Sudoku {
     fn validate_square(&self, ind: usize) -> bool {
         let mut numbers = vec![1,2,3,4,5,6,7,8,9];
         let square_indices = self.calculate_nth_square_indices(ind);
-        for i in ind..(ind+9) {
+        for i in square_indices {
             if self.current_board[i] != -1 {
                 let nmb_index = self.find_in(self.current_board[i] ,&numbers);
                 if nmb_index == -1 {
