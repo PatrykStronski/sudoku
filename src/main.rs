@@ -9,9 +9,8 @@ fn solve_sudoku_with_check(sdk: &mut sudoku::Sudoku) {
 fn main() -> Result<(), ()> {
     println!("Loading sudokus");
     let mut sudokus = load_puzzle::load()?;
-    /*for mut sdk in sudokus {
+    for mut sdk in sudokus {
         solve_sudoku_with_check(&mut sdk);
-    }*/
-    solve_sudoku_with_check(&mut sudokus[0]);
+    }
     Ok(())
 }
