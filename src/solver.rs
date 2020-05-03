@@ -71,24 +71,39 @@ fn guess_of_lowest_options(sdk: &mut Sudoku, threshold: usize) -> u8 {
     return changed;
 }
 
+fn backtrack_step(sdk: &mut Sudoku, mut pos_x: usize, mut pos_y: usize) -> bool {
+    if pos_x == 9 && pos_y == 8 {
+        if sdk.get_errors_with_solution() == 0 {
+            return true;
+        }
+        return false;
+    }
+    if pos_x == 9 {
+        pos_y += 1;
+        pos_x = 0;
+    }
+    if !sdk.is_empty(pos_x, pos_y) {
+        return backtrack_step(sdk, pos_x + 1, pos_y);
+    }
+    let possible_solutions = sdk.get_possible_solutions(pos_x, pos_y);
+    for sol in possible_solutions {
+        sdk.insert_field(pos_x, pos_y, sol);
+        if backtrack_step(sdk, pos_x + 1, pos_y) {
+            return true;
+        }
+        sdk.nullify_field(pos_x, pos_y);
+    }
+    return false;
+}
+
 fn backtrack(sdk: &mut Sudoku) {
-    
+    backtrack_step(sdk, 0 as usize, 0 as usize);
 }
 
 pub fn solve_sudoku(sdk: &mut Sudoku) {
     println!("{}", sdk.print_current_board());
-    for _repeat in 0..10 {
-        fill_in_till_possible(sdk);
-        for threshold in 2..9 {
-            let changed = guess_of_lowest_options(sdk, threshold);
-            if changed > 0 {
-                break;
-            }
-        }
-        if sdk.get_errors_with_solution() == 0 {
-            break;
-        }
-    }
+    fill_in_till_possible(sdk);
+    backtrack(sdk);
     println!("{}", sdk.print_current_board());
     println!("{}", sdk.get_errors_with_solution());
 }
