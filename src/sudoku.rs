@@ -140,7 +140,6 @@ impl Sudoku {
                 }
             }
         }
-        println!("Unique {:?}", comp2);
         if comp2.len() != 1 {
             return -1;
         }
@@ -163,6 +162,11 @@ impl Sudoku {
     pub fn insert_field(&mut self, pos_x: usize, pos_y: usize, value: i16) {
         let index = pos_y * 9 + pos_x;
         self.current_board[index] = value;
+    }
+
+    pub fn nullify_field(&mut self, pos_x: usize, pos_y: usize) {
+        let index = pos_y * 9 + pos_x;
+        self.current_board[index] = -1;
     }
 
     pub fn get_quantity_empty_fields(&self) -> u8 {
@@ -195,9 +199,9 @@ impl Sudoku {
     }
 
     fn find_in(&self, number: i16, numbers: &Vec<i16>) -> i16 {
-        for n in numbers {
-            if numbers[*n as usize] == number {
-                return *n;
+        for n in 0..numbers.len() {
+            if numbers[n] == number {
+                return n as i16;
             }
         }
         return -1;
