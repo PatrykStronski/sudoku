@@ -146,8 +146,14 @@ impl Sudoku {
         return comp2[0];
     }
 
-    pub fn is_empty(&self, pos_x: usize, pos_y: usize) -> bool {
+    fn calculate_index(&self, pos_x: usize, pos_y: usize) -> usize {
         let index: usize = pos_y * 9 + pos_x;
+        println!("x: {}, y: {}, index: {}", pos_x, pos_y, index);
+        return index;
+    }
+
+    pub fn is_empty(&self, pos_x: usize, pos_y: usize) -> bool {
+        let index = self.calculate_index(pos_x, pos_y);
         if self.current_board[index] == -1 {
             return true
         }
@@ -155,17 +161,17 @@ impl Sudoku {
     }
     
     pub fn get_field(&self, pos_x: usize, pos_y: usize) -> i16 {
-        let index: usize = pos_y * 9 + pos_x;
+        let index = self.calculate_index(pos_x, pos_y);
         return self.current_board[index];
     }
 
     pub fn insert_field(&mut self, pos_x: usize, pos_y: usize, value: i16) {
-        let index = pos_y * 9 + pos_x;
+        let index = self.calculate_index(pos_x, pos_y);
         self.current_board[index] = value;
     }
 
     pub fn nullify_field(&mut self, pos_x: usize, pos_y: usize) {
-        let index = pos_y * 9 + pos_x;
+        let index = self.calculate_index(pos_x, pos_y);
         self.current_board[index] = -1;
     }
 
