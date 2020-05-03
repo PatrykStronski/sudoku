@@ -2,15 +2,15 @@ mod sudoku;
 mod load_puzzle;
 mod solver;
 
-fn solve_sudoku_with_check(sdk: &mut sudoku::Sudoku) {
-    solver::solve_sudoku(sdk);
-}
-
 fn main() -> Result<(), ()> {
     println!("Loading sudokus");
-    let mut sudokus = load_puzzle::load()?;
+    let sudokus = load_puzzle::load()?;
+    let mut unsolved: u8 = 0;
     for mut sdk in sudokus {
-        solve_sudoku_with_check(&mut sdk);
+        if !solver::solve_sudoku(&mut sdk) {
+            unsolved += 1;
+        }
     }
+    println!("Unsolved: {} sudokus", unsolved);
     Ok(())
 }

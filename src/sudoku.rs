@@ -21,10 +21,6 @@ impl Sudoku {
         return return_str;
     }
 
-    pub fn print_initial_board(&self) -> String {
-        return self.print_board(self.initial_board.to_vec());
-    }
-
     pub fn print_current_board(&self) -> String {
         return self.print_board(self.current_board.to_vec());
     }
@@ -127,32 +123,6 @@ impl Sudoku {
         return comp2;
     }
 
-    fn choose_unique(&self, vec1: &Vec<i16>, vec2: &Vec<i16>, vec3: &Vec<i16>) -> i16 {
-        let mut comp1 = Vec::<i16>::new();
-        for i in vec1 {
-            for j in vec2 {
-                if i == j {
-                    comp1.push(*i)
-                }
-            }
-        }
-        if comp1.len() == 0 {
-            return -1;
-        }
-        let mut comp2 = Vec::<i16>::new();
-        for i in comp1 {
-            for j in vec3 {
-                if i == *j {
-                    comp2.push(i)
-                }
-            }
-        }
-        if comp2.len() != 1 {
-            return -1;
-        }
-        return comp2[0];
-    }
-
     fn calculate_index(&self, pos_x: usize, pos_y: usize) -> usize {
         let index: usize = pos_y * 9 + pos_x;
         return index;
@@ -164,11 +134,6 @@ impl Sudoku {
             return true
         }
         return false;
-    }
-    
-    pub fn get_field(&self, pos_x: usize, pos_y: usize) -> i16 {
-        let index = self.calculate_index(pos_x, pos_y);
-        return self.current_board[index];
     }
 
     pub fn insert_field(&mut self, pos_x: usize, pos_y: usize, value: i16) {
@@ -196,18 +161,6 @@ impl Sudoku {
         let column_options = self.check_column(pos_x);
         let square_options = self.check_square(pos_x, pos_y);
         return self.choose_unique_vec(&row_options, &column_options, &square_options);
-    }
-
-    pub fn fill_in_field(&mut self, pos_x: usize, pos_y: usize) -> bool {
-        let row_options = self.check_row(pos_y);
-        let column_options = self.check_column(pos_x);
-        let square_options = self.check_square(pos_x, pos_y);
-        let unique = self.choose_unique(&row_options, &column_options, &square_options);
-        if unique != -1 {
-            self.insert_field(pos_x, pos_y, unique);
-            return true;
-        }
-        return false;
     }
 
     fn find_in(&self, number: i16, numbers: &Vec<i16>) -> i16 {

@@ -25,18 +25,25 @@ fn backtrack_step(sdk: &mut Sudoku, mut pos_x: usize, mut pos_y: usize) -> bool 
     return false;
 }
 
-fn backtrack(sdk: &mut Sudoku) {
-    backtrack_step(sdk, 0 as usize, 0 as usize);
+fn backtrack(sdk: &mut Sudoku) -> bool {
+    if backtrack_step(sdk, 0 as usize, 0 as usize) {
+        return true;
+    }
+    return false;
 }
 
-pub fn solve_sudoku(sdk: &mut Sudoku) {
+pub fn solve_sudoku(sdk: &mut Sudoku) -> bool {
     println!("{}", sdk.print_current_board());
     if sdk.validate_solution() {
-        backtrack(sdk);
-        println!("{}", sdk.print_current_board());
-        println!("Errors with solution: {}", sdk.get_errors_with_solution());
-    } else {
-        println!("INVALID DATA");
+        if backtrack(sdk) {
+            println!("{}", sdk.print_current_board());
+            println!("Errors with solution: {}", sdk.get_errors_with_solution());
+            return true;
+        } else {
+            println!("UNSOLVABLE");
+            return false;
+        }
     }
-
+    println!("INVALID INPUT DATA");
+    return false;
 }
