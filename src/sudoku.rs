@@ -32,7 +32,7 @@ impl Sudoku {
     pub fn get_errors_with_solution(&self) -> u8 {
         let mut errors = 0;
         for i in 0..80 {
-            if self.current_board[i] != self.solution[i] && self.current_board[i] != -1 {
+            if self.current_board[i] != self.solution[i] {
                 errors += 1;
             }
         }
@@ -212,8 +212,9 @@ impl Sudoku {
         return -1;
     }
 
-    fn validate_row(&self, ind: usize) -> bool {
+    fn validate_row(&self, mut ind: usize) -> bool {
         let mut numbers = vec![1,2,3,4,5,6,7,8,9];
+        ind = ind * 9;
         for i in ind..(ind+9) {
             if self.current_board[i] != -1 {
                 let nmb_index = self.find_in(self.current_board[i] ,&numbers);
@@ -230,6 +231,7 @@ impl Sudoku {
     fn validate_column(&self, mut ind: usize) -> bool {
         let mut numbers = vec![1,2,3,4,5,6,7,8,9];
         while ind < 81 {
+            println!("{}", ind);
             if self.current_board[ind] != -1 {
                 let nmb_index = self.find_in(self.current_board[ind] ,&numbers);
                 if nmb_index == -1 {

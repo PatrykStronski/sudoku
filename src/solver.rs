@@ -73,7 +73,7 @@ fn guess_of_lowest_options(sdk: &mut Sudoku, threshold: usize) -> u8 {
 
 fn backtrack_step(sdk: &mut Sudoku, mut pos_x: usize, mut pos_y: usize) -> bool {
     if pos_x == 9 && pos_y == 8 {
-        if sdk.get_errors_with_solution() == 0 {
+        if sdk.validate_solution() {
             return true;
         }
         return false;
@@ -102,8 +102,7 @@ fn backtrack(sdk: &mut Sudoku) {
 
 pub fn solve_sudoku(sdk: &mut Sudoku) {
     println!("{}", sdk.print_current_board());
-    fill_in_till_possible(sdk);
     backtrack(sdk);
     println!("{}", sdk.print_current_board());
-    println!("{}", sdk.get_errors_with_solution());
+    println!("Errors with solution: {}", sdk.get_errors_with_solution());
 }
