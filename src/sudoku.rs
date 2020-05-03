@@ -32,7 +32,7 @@ impl Sudoku {
     pub fn get_errors_with_solution(&self) -> u8 {
         let mut errors = 0;
         for i in 0..80 {
-            if self.current_board[i] != self.solution[i] {
+            if self.current_board[i] != self.solution[i] && self.current_board[i] != -1 {
                 errors += 1;
             }
         }
@@ -148,7 +148,6 @@ impl Sudoku {
 
     fn calculate_index(&self, pos_x: usize, pos_y: usize) -> usize {
         let index: usize = pos_y * 9 + pos_x;
-        println!("x: {}, y: {}, index: {}", pos_x, pos_y, index);
         return index;
     }
 

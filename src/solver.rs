@@ -50,9 +50,9 @@ fn fill_in_till_possible(sdk: &mut Sudoku) {
 
 fn guess_of_lowest_options(sdk: &mut Sudoku, threshold: usize) -> u8 {
     let mut changed: u8 = 0;
-    for x in 0..9 {
-        for y in 0..9 {
-            if sdk.get_field(x, y) == -1 {
+    for y in 0..9 {
+        for x in 0..9 {
+            if !sdk.is_empty(x, y) {
                 continue;
             }
             let poss_solutions = sdk.get_possible_solutions(x, y);
@@ -71,6 +71,10 @@ fn guess_of_lowest_options(sdk: &mut Sudoku, threshold: usize) -> u8 {
     return changed;
 }
 
+fn backtrack(sdk: &mut Sudoku) {
+    
+}
+
 pub fn solve_sudoku(sdk: &mut Sudoku) {
     println!("{}", sdk.print_current_board());
     for _repeat in 0..10 {
@@ -86,4 +90,5 @@ pub fn solve_sudoku(sdk: &mut Sudoku) {
         }
     }
     println!("{}", sdk.print_current_board());
+    println!("{}", sdk.get_errors_with_solution());
 }
