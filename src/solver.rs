@@ -1,5 +1,5 @@
 use crate::sudoku::Sudoku;
-use std::time::{Duration, Instant};
+use std::time::Instant;
 
 fn backtrack_step(sdk: &mut Sudoku, mut pos_x: usize, mut pos_y: usize) -> bool {
     if pos_x == 9 && pos_y == 8 {
