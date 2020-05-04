@@ -21,6 +21,10 @@ impl Sudoku {
         return return_str;
     }
 
+    pub fn nullify_solution(&mut self) {
+        self.current_board = self.initial_board.to_vec();
+    }
+
     pub fn print_current_board(&self) -> String {
         return self.print_board(self.current_board.to_vec());
     }
