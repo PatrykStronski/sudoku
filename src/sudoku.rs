@@ -7,6 +7,11 @@ pub struct Sudoku {
 }
 
 impl Sudoku {
+    pub fn calculate_index(&self, pos_x: usize, pos_y: usize) -> usize {
+        let index: usize = pos_y * 9 + pos_x;
+        return index;
+    }
+
     fn print_board(&self, board: Vec<i16>) -> String {
         let mut cnt = 0;
         let mut return_str = "".to_string();
@@ -127,11 +132,6 @@ impl Sudoku {
         return comp2;
     }
 
-    fn calculate_index(&self, pos_x: usize, pos_y: usize) -> usize {
-        let index: usize = pos_y * 9 + pos_x;
-        return index;
-    }
-
     pub fn is_empty(&self, pos_x: usize, pos_y: usize) -> bool {
         let index = self.calculate_index(pos_x, pos_y);
         if self.current_board[index] == -1 {
@@ -237,5 +237,37 @@ impl Sudoku {
             }
         }
         return true;
+    }
+
+    pub fn calculate_domains(&self, base_domains: &Vec<Vec<i16>>) -> Vec<Vec<i16>> {
+        let mut domains = base_domains.to_vec();
+        for y in 0..9 {
+            for x in 0..9 {
+                if !self.is_empty(x, y) {
+                    continue;
+                }
+                let pos_sols = self.get_possible_solutions(x, y);
+                if pos_sols.len() == 0 {
+                    return vec![];
+                }
+                domains[self.calculate_index(x, y)] = pos_sols;
+            }
+        }
+        return domains;
+    }
+
+    pub fn create_domains(&self) -> Vec<Vec<i16>> {
+        let mut domains = Vec::<Vec<i16>>::with_capacity(81);
+        for y in 0..9 {
+            for x in 0..9 {
+                if !self.is_empty(x, y) {
+                    domains.push(vec![-1]);
+                    continue;
+                }
+                let pos_sols = self.get_possible_solutions(x, y);
+                domains.push(pos_sols);
+            }
+        }
+        return domains;
     }
 }
