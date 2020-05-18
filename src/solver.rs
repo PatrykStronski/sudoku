@@ -26,8 +26,8 @@ fn backtrack_step(sdk: &mut Sudoku, mut pos_x: usize, mut pos_y: usize) -> bool 
 fn backtrack(sdk: &mut Sudoku) -> bool {
     let now = Instant::now();
     if backtrack_step(sdk, 0 as usize, 0 as usize) {
-        println!("{}", sdk.print_current_board());
-        println!("Errors with solution: {}", sdk.get_errors_with_solution());
+        //println!("{}", sdk.print_current_board());
+        //println!("Errors with solution: {}", sdk.get_errors_with_solution());
         println!("Execution time with basic backtrack: {}", now.elapsed().as_millis());    
         return true;
     }
@@ -63,8 +63,8 @@ fn backtrack_forward_check(sdk: &mut Sudoku) -> bool {
     let now = Instant::now();
     let domains = sdk.create_domains();
     if backtrack_forward_step(sdk, domains, 0 as usize, 0 as usize) {
-        println!("{}", sdk.print_current_board());
-        println!("Errors with solution: {}", sdk.get_errors_with_solution());
+        //println!("{}", sdk.print_current_board());
+        //println!("Errors with solution: {}", sdk.get_errors_with_solution());
         println!("Execution time with forward checking: {}", now.elapsed().as_millis());    
         return true;
     }
@@ -74,7 +74,7 @@ fn backtrack_forward_check(sdk: &mut Sudoku) -> bool {
 }
 
 pub fn solve_sudoku(sdk: &mut Sudoku) -> bool {
-    println!("{}", sdk.print_current_board());
+    //println!("{}", sdk.print_current_board());
     let now = Instant::now();
     if sdk.validate_solution() {
         let mut correct = 0;
