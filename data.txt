@@ -1,0 +1,140 @@
+Loading sudokus
+Execution time with basic backtrack: 839
+Execution time with forward checking: 6270
+2 methods solved the sudoku
+Execution time with basic backtrack: 473
+Execution time with forward checking: 3666
+2 methods solved the sudoku
+Execution time with basic backtrack: 181
+Execution time with forward checking: 1896
+2 methods solved the sudoku
+Execution time with basic backtrack: 50
+Execution time with forward checking: 504
+2 methods solved the sudoku
+Execution time with basic backtrack: 673
+Execution time with forward checking: 3363
+2 methods solved the sudoku
+Execution time with basic backtrack: 26
+Execution time with forward checking: 187
+2 methods solved the sudoku
+Execution time with basic backtrack: 235
+Execution time with forward checking: 2351
+2 methods solved the sudoku
+Execution time with basic backtrack: 486
+Execution time with forward checking: 2890
+2 methods solved the sudoku
+Execution time with basic backtrack: 696
+Execution time with forward checking: 4470
+2 methods solved the sudoku
+Execution time with basic backtrack: 4090
+Execution time with forward checking: 38591
+2 methods solved the sudoku
+Execution time with basic backtrack: 25
+Execution time with forward checking: 246
+2 methods solved the sudoku
+Execution time with basic backtrack: 268
+Execution time with forward checking: 2061
+2 methods solved the sudoku
+Execution time with basic backtrack: 15
+Execution time with forward checking: 225
+2 methods solved the sudoku
+Execution time with basic backtrack: 426
+Execution time with forward checking: 6275
+2 methods solved the sudoku
+Execution time with basic backtrack: 9
+Execution time with forward checking: 134
+2 methods solved the sudoku
+Execution time with basic backtrack: 1013
+Execution time with forward checking: 13165
+2 methods solved the sudoku
+Execution time with basic backtrack: 345
+Execution time with forward checking: 3201
+2 methods solved the sudoku
+Execution time with basic backtrack: 198
+Execution time with forward checking: 1605
+2 methods solved the sudoku
+Execution time with basic backtrack: 2608
+Execution time with forward checking: 46821
+2 methods solved the sudoku
+Execution time with basic backtrack: 59
+Execution time with forward checking: 797
+2 methods solved the sudoku
+Execution time with basic backtrack: 323
+Execution time with forward checking: 1840
+2 methods solved the sudoku
+Execution time with basic backtrack: 75
+Execution time with forward checking: 509
+2 methods solved the sudoku
+Execution time with basic backtrack: 400
+Execution time with forward checking: 2413
+2 methods solved the sudoku
+Execution time with basic backtrack: 7261
+Execution time with forward checking: 50600
+2 methods solved the sudoku
+Execution time with basic backtrack: 2573
+Execution time with forward checking: 21395
+2 methods solved the sudoku
+Execution time with basic backtrack: 3409
+Execution time with forward checking: 34560
+2 methods solved the sudoku
+Execution time with basic backtrack: 231
+Execution time with forward checking: 2690
+2 methods solved the sudoku
+Execution time with basic backtrack: 133
+Execution time with forward checking: 1063
+2 methods solved the sudoku
+Execution time with basic backtrack: 352
+Execution time with forward checking: 4162
+2 methods solved the sudoku
+Execution time with basic backtrack: 166
+Execution time with forward checking: 2172
+2 methods solved the sudoku
+Execution time with basic backtrack: 959
+Execution time with forward checking: 9918
+2 methods solved the sudoku
+Execution time with basic backtrack: 1167
+Execution time with forward checking: 5341
+2 methods solved the sudoku
+Execution time with basic backtrack: 3597
+Execution time with forward checking: 16920
+2 methods solved the sudoku
+Execution time with basic backtrack: 1317
+Execution time with forward checking: 14546
+2 methods solved the sudoku
+Execution time with basic backtrack: 873
+Execution time with forward checking: 3245
+2 methods solved the sudoku
+Execution time with basic backtrack: 235
+Execution time with forward checking: 2446
+2 methods solved the sudoku
+Execution time with basic backtrack: 286
+Execution time with forward checking: 3101
+2 methods solved the sudoku
+Execution time with basic backtrack: 329
+Execution time with forward checking: 3598
+2 methods solved the sudoku
+Execution time with basic backtrack: 290
+Execution time with forward checking: 3110
+2 methods solved the sudoku
+Execution time with basic backtrack: 290
+Execution time with forward checking: 3124
+2 methods solved the sudoku
+Execution time with basic backtrack: 23
+Execution time with forward checking: 272
+2 methods solved the sudoku
+Execution time with basic backtrack: 88
+Execution time with forward checking: 730
+2 methods solved the sudoku
+Execution time with basic backtrack: 406
+Execution time with forward checking: 2382
+2 methods solved the sudoku
+UNSOLVABLE
+Execution time: 3868
+UNSOLVED
+Execution time: 14357
+0 methods solved the sudoku
+INVALID INPUT DATA
+Execution time: 0
+INVALID INPUT DATA
+Execution time: 0
+Unsolved: 3 sudokus
